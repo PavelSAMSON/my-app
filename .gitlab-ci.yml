@@ -1,0 +1,29 @@
+stages:
+  - build
+  - test
+  - deploy
+
+variables:
+  MAVEN_OPTS: "-Xms512m -Xmx1024m"
+
+before_script:
+  - apt-get update -qq && apt-get install -y maven
+
+build:
+  stage: build
+  script:
+    - mvn clean install
+  artifacts:
+    paths:
+      - target/*.jar
+
+test:
+  stage: test
+  script:
+    - mvn test
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploying the app..."
+    - # Здесь можно добавить команды для развертывания, например, на сервер или в облако.
